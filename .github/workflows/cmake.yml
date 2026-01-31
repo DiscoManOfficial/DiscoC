@@ -48,6 +48,12 @@ jobs:
         shell: bash
         run: cmake --build build
 
+      - name: Upload artifacts (Native)
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-${{ matrix.os }}-${{ matrix.build_type }}
+          path: build/
+
   dos:
     name: DOS cross-compile (DJGPP) (Release)
     runs-on: ubuntu-latest
@@ -80,3 +86,9 @@ jobs:
       - name: Build (DOS)
         run: |
           cmake --build build-dos
+
+      - name: Upload artifacts (DOS)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dos-Release
+          path: build-dos/
