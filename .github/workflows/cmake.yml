@@ -55,16 +55,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install DJGPP toolchain and build tools
+      - name: Install build tools + DJGPP toolchain (prebuilt)
         run: |
+          set -e
           sudo apt-get update
-          sudo apt-get install -y cmake ninja-build djgpp
+          sudo apt-get install -y cmake ninja-build curl tar bzip2 libfl2
+          cd "${GITHUB_WORKSPACE}"
+          rm -rf .djgpp
+          mkdir -p .djgpp
+          curl -L \
+            https://github.com/andrewwutw/build-djgpp/releases/download/v3.4/djgpp-linux64-gcc1220.tar.bz2 \
+            -o djgpp.tar.bz2
+          tar -xjf djgpp.tar.bz2 -C .djgpp --strip-components=1
+          chmod -R a+rx .djgpp/bin
+          ldd .djgpp/bin/i586-pc-msdosdjgpp-ar | grep -E 'libfl|not found' || true
+          test -x .djgpp/bin/i586-pc-msdosdjgpp-g++
 
       - name: Configure (DOS toolchain)
         run: |
           cmake -S . -B build-dos -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_TOOLCHAIN_FILE=dos-djgpp.cmake
+            -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/cmake/dos-djgpp.cmake
 
       - name: Build (DOS)
         run: |
