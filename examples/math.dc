@@ -1,0 +1,11 @@
+// math.dc
+
+word add(word a, word b) {
+    return a + b;
+}
+
+void main() {
+    word r1 = 0x20;
+    word r2 = 0x20;
+	word sum = add(r1, r2);
+}

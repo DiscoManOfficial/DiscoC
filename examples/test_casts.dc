@@ -1,0 +1,29 @@
+// test_casts.dc
+
+// This function will be called with an unsigned byte value (e.g., 200).
+// The compiler should generate the LDB instruction.
+word test_unsigned_widen(unsigned byte ub) {
+    word result = (word)ub;
+    return result;
+}
+
+// This function will be called with a signed byte value (e.g., -5).
+// The compiler should generate the SEX instruction.
+word test_signed_widen(byte sb) {
+    word result = (word)sb;
+    return result;
+}
+
+// This function will be called with a word value (e.g., 1000).
+// The compiler should generate NO instruction for the cast itself.
+byte test_narrowing(word w) {
+    byte result = (byte)w;
+    return result;
+}
+
+// Main function to drive the tests (though we only need to inspect the assembly).
+void main() {
+    word r1 = test_unsigned_widen(200);
+    word r2 = test_signed_widen(-5);
+    byte r3 = test_narrowing(1000);
+}

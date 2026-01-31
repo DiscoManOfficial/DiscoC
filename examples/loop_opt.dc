@@ -1,0 +1,8 @@
+// loop_opt.dc
+
+void main() {
+    word i;
+
+    for (i = 100; i > 0; i = i - 1) {
+    }
+}

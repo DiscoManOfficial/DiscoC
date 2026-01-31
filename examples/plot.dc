@@ -1,0 +1,8 @@
+// plot.dc
+
+void main() {
+    plot_begin;
+        set_color(1);
+        plot(100, 80);
+    plot_end;
+}

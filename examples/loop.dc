@@ -1,0 +1,9 @@
+// loop.dc
+
+void main() {
+    byte i = 10;
+
+    while (i > 0) {
+        i = (byte)(i - 1);
+    }
+}
